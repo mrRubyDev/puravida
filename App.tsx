@@ -1,33 +1,19 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as eva from "@eva-design/eva";
-import {
-  ApplicationProvider,
-  Button,
-  Layout,
-  Text,
-} from "@ui-kitten/components";
+import { ApplicationProvider } from "@ui-kitten/components";
 import { default as mapping } from "./mapping.json";
 import * as theme from "./custom-theme.json";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { View } from "react-native";
 import BottomTabNavigator from "./src/navigation/BottomTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import RootStackNavigator from "./src/navigation/RootStack";
 
 SplashScreen.preventAutoHideAsync();
-
-const HomeScreen = () => (
-  <Layout
-    style={{
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <Text category="h1">PURA VIDA</Text>
-    <Button disabled>Trying pura vida</Button>
-  </Layout>
-);
 
 export default () => {
   const [fontsLoaded, fontError] = Font.useFonts({
@@ -42,10 +28,15 @@ export default () => {
   }, [fontsLoaded]);
 
   return (
-    <NavigationContainer>
-      <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
-        <BottomTabNavigator />
-      </ApplicationProvider>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <StatusBar style="dark" />
+        <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+          <SafeAreaProvider>
+            <RootStackNavigator />
+          </SafeAreaProvider>
+        </ApplicationProvider>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 };

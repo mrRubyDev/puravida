@@ -10,6 +10,9 @@ import {
   FontAwesome6,
   FontAwesome,
 } from "@expo/vector-icons";
+import Diet from "../screens/Diet";
+import DietStackNavigator from "./diet/DietStackNavigator";
+import WaterTracker from "../screens/water/WaterTracker";
 
 enum BottomTabScreenNames {
   Exercise = "Exercise",
@@ -27,30 +30,16 @@ export type BottomTabNavigatorParamList = {
 
 const BottomNav = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
-const HomeScreen = () => (
-  <Layout
-    style={{
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "black",
-    }}
-  >
-    <Text category="h1">PURA VIDA</Text>
-    <Button disabled>Trying pura vida</Button>
-  </Layout>
-);
-
 export default function BottomTabNavigator() {
   const theme = useTheme();
 
   const iconColor = useCallback((isFocused: boolean) => {
-    return isFocused ? theme["color-primary-500"] : theme["color-basic-600"];
+    return isFocused ? theme["color-primary-900"] : theme["color-basic-600"];
   }, []);
 
   return (
     <BottomNav.Navigator
-      initialRouteName={BottomTabScreenNames.Exercise}
+      initialRouteName={BottomTabScreenNames.Water}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -62,7 +51,7 @@ export default function BottomTabNavigator() {
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
               overflow: "hidden",
-              backgroundColor: "transparent",
+              backgroundColor: "rgba(139, 138, 138, 0.4)",
             }}
           />
         ),
@@ -78,7 +67,7 @@ export default function BottomTabNavigator() {
     >
       <BottomNav.Screen
         name={BottomTabScreenNames.Exercise}
-        component={HomeScreen}
+        component={Diet}
         options={{
           tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
@@ -91,7 +80,7 @@ export default function BottomTabNavigator() {
       />
       <BottomNav.Screen
         name={BottomTabScreenNames.Diet}
-        component={HomeScreen}
+        component={DietStackNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
             <FontAwesome6
@@ -104,7 +93,7 @@ export default function BottomTabNavigator() {
       />
       <BottomNav.Screen
         name={BottomTabScreenNames.Water}
-        component={HomeScreen}
+        component={WaterTracker}
         options={{
           tabBarIcon: ({ focused }) => (
             <FontAwesome6
@@ -117,7 +106,7 @@ export default function BottomTabNavigator() {
       />
       <BottomNav.Screen
         name={BottomTabScreenNames.Profile}
-        component={HomeScreen}
+        component={Diet}
         options={{
           tabBarIcon: ({ focused }) => (
             <FontAwesome name="user" size={24} color={iconColor(focused)} />
